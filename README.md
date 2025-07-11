@@ -87,7 +87,7 @@ server {
 
 ### ⚙️ Full Setup (Debian/Ubuntu)
 
-(EaglerSPRelay Setup)
+# EaglerSPRelay Setup
 ```bash
 # Install Dependencies
 apt install openjdk-17-jdk
@@ -123,7 +123,7 @@ WantedBy=multi-user.target
 systemctl daemon-reload
 systemctl enable --now eaglersprelay.service
 
-(NGINX Reverse Proxy Setup)
+# NGINX Reverse Proxy Setup
 ```bash
 apt install nginx certbot python3-certbot-nginx
 rm /etc/nginx/sites-enabled/default

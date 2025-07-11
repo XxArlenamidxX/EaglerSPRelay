@@ -182,3 +182,5 @@ systemctl restart eaglersprelay
 
 ✅ Your reverse proxy should now work.  
 📩 Questions? DM `arlenrivalxs` on Discord.
+
+**Custom Relay made by Me: wss://minecraft.arlensdash.online/relay**

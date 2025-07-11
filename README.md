@@ -89,9 +89,13 @@ server {
 
 (EaglerSPRelay Setup)
 ```bash
+# Install Dependencies
+apt install openjdk-17-jdk
+apt install unzip
+
+# Install and Start Relay
 curl -L https://github.com/XxArlenamidxX/EaglerSPRelay/archive/refs/heads/main.zip -o EaglerSPRelay.zip
 unzip EaglerSPRelay.zip
-apt install openjdk-17-jdk
 cd EaglerSPRelay-main
 java -jar EaglerSPRelay.jar
 ```
@@ -102,7 +106,7 @@ sudo nano /etc/systemd/system/eaglersprelay.service
 ```
 PASTE THIS IN:
 
-```bash
+```ini
 [Unit]
 Description=EaglerSPRelay
 After=network.target
@@ -161,12 +165,15 @@ server {
 }
 ```
 
-Now enable the site and reload NGINX:
+Now enable the site, reload NGINX and if you setup the relay to run in the background restart it:
 
 ```bash
 ln -s /etc/nginx/sites-available/eaglercraft-relay /etc/nginx/sites-enabled
 nginx -t
 systemctl restart nginx
+
+# If you setup the relay as a service
+systemctl restart eaglersprelay
 ```
 
 ✅ Your reverse proxy should now work.  

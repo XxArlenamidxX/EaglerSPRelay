@@ -120,8 +120,11 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
+Now restart systemctl and enable the service
+```bash
 systemctl daemon-reload
 systemctl enable --now eaglersprelay.service
+```
 
 # NGINX Reverse Proxy Setup
 ```bash

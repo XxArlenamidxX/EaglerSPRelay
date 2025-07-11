@@ -88,9 +88,38 @@ server {
 ### ⚙️ Full Setup (Debian/Ubuntu)
 
 (EaglerSPRelay Setup)
+```bash
+curl -L https://github.com/XxArlenamidxX/EaglerSPRelay/archive/refs/heads/main.zip -o EaglerSPRelay.zip
+unzip EaglerSPRelay.zip
+apt install openjdk-17-jdk
+cd EaglerSPRelay-main
+java -jar EaglerSPRelay.jar
+```
+
+**OPTIONAL - YOU CAN SETUP A SERVICE THAT RUNS IT IN THE BACKGROUND**
+```bash
+sudo nano /etc/systemd/system/eaglersprelay.service
+```
+PASTE THIS IN:
+
+```bash
+[Unit]
+Description=EaglerSPRelay
+After=network.target
+
+[Service]
+WorkingDirectory=/EaglerSPRelay-main
+ExecStart=/usr/bin/java -jar EaglerSPRelay.jar
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+systemctl daemon-reload
+systemctl enable --now eaglersprelay.service
 
 (NGINX Reverse Proxy Setup)
-
 ```bash
 apt install nginx certbot python3-certbot-nginx
 rm /etc/nginx/sites-enabled/default

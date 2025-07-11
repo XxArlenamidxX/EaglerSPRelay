@@ -1,33 +1,57 @@
+
 # EaglerSPRelay
 
 ## Creating a LAN Relay
 `YOU NEED A VPS AND RECOMMENDED TO HAVE AN EAGLERCRAFT INSTANCE RUNNING ON IT`
 
-### Simply download this on a folder and run `java -jar EaglerSPRelay.jar`
+### Simply download this in a folder and run:
+```bash
+java -jar EaglerSPRelay.jar
+```
 
-**IF YOU DONT HAVE AN EAGLERCRAFT INSTANCE ON YOUR VPS, YOU NEED TO REVERSE PROXY localhost:6699 TO A DOMAIN**
+**IF YOU DON'T HAVE AN EAGLERCRAFT INSTANCE ON YOUR VPS, YOU NEED TO REVERSE PROXY localhost:6699 TO A DOMAIN**
 
-Run `java -jar EaglerSPRelay.jar --debug` to view debug info like all the IPs of incoming connections, as it is not shown by default because logging all that info will reduce performance when the relay is being pinged many times a second depending on it's popularity.
+To view debug info like incoming IPs:
+```bash
+java -jar EaglerSPRelay.jar --debug
+```
 
-Edit the `relayConfig.ini` file generated on first launch to change the port and configure ratelimiting and such, and `relays.txt` to change the list of STUN and TURN relays reported to clients connecting to the relay, which are required to correctly establish a P2P LAN world connection in browsers
+Edit the `relayConfig.ini` file generated on first launch to change the port, configure rate limiting, etc.  
+Also edit `relays.txt` to update the list of STUN and TURN relays reported to clients — these are required to establish P2P LAN world connections in browsers.
 
-**The `origin-whitelist` config variable is a semicolon (`;`) seperated list of domains used to restrict what sites are to be allowed to use your relay. When left blank it allows all sites. Add `offline` to allow offline download clients to use your relay as well, and `null` to allow connections that do not specify an `Origin:` header. Use `*` as a wildcard, for example: `*.deev.is` allows all domains ending with "deev.is" to use the relay.**
+> **`origin-whitelist` is a semicolon (`;`) separated list of domains allowed to use your relay.**
+>
+> Examples:
+> - `*` allows everything  
+> - `*.deev.is` allows all subdomains of `deev.is`  
+> - Add `offline` to allow offline clients  
+> - Add `null` to allow clients without an `Origin:` header
 
+---
 
+### 📅 2025 Notes
 
-2025 notes:
+Shared worlds work between **any two Eaglercraft clients** that share a relay.  
+Anyone can join — not limited to local devices.
 
-Shared worlds work between any two eaglercraft clients that share a relay server, anyone can join your world it is not limited to just the other devices on your local network
+Use **URI format** like:
+```
+ws://yourdomain.com:port
+wss://yourdomain.com:port
+```
 
-When adding the relay address to the client you must provide it in URI format like "ws://address:port" or "wss://address:port", and determining the IP address and setting up port forwarding is the same as making a regular minecraft server
+Rate limiting:
+- `ping-ratelimit`: limit pings from world search
+- `world-ratelimit`: limit creating/joining new worlds
 
-Ratelimiting is the same as eaglercraftbungee, "ping-ratelimit" is for limiting pings from clients searching for worlds, "world-ratelimit" is for limiting creating and joining new worlds
+🔒 The relay is only for **discovery**, not for game packets. Chat, coords, gameplay = private.
 
-The relay is not used for transferring the actual gameplay packets, it is only used for the initial discovery process to allow clients to find each other, stuff such as coordinates and chat messages aren't visible to the relay
+---
 
-An example of a reverse proxy configuration using nginx:
+### 🛡️ Example NGINX Reverse Proxy Config
 
-# Replace <domain> with your domain
+```nginx
+# HTTP to HTTPS redirect
 server {
     listen 80;
     server_name <domain>;
@@ -37,7 +61,7 @@ server {
     }
 }
 
-# Replace <domain> with your domain
+# HTTPS proxy to relay
 server {
     listen 443 ssl;
     server_name <domain>;
@@ -57,17 +81,21 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
     }
 }
+```
 
-A full tutorial on how to setup the reverse proxy
+---
 
-**MAKE SURE YOUR RUNNING THIS ON ROOT**
+### ⚙️ Full Setup (Debian/Ubuntu)
 
+```bash
 apt install nginx certbot python3-certbot-nginx
 rm /etc/nginx/sites-enabled/default
-nano /etc/nginx/sites-enabled/eaglercraft-relay
+nano /etc/nginx/sites-available/eaglercraft-relay
+```
 
-PASTE THIS INTO THE CONFIGURATION
-``
+Then paste:
+
+```nginx
 server {
     listen 443 ssl;
     server_name <domain>;
@@ -87,10 +115,15 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
     }
 }
-``
-Save it
+```
+
+Now enable the site and reload NGINX:
+
+```bash
 ln -s /etc/nginx/sites-available/eaglercraft-relay /etc/nginx/sites-enabled
 nginx -t
 systemctl restart nginx
+```
 
-Reverse proxy should be working now, if something goes add arlenrivalxs on discord
+✅ Your reverse proxy should now work.  
+📩 Questions? DM `arlenrivalxs` on Discord.

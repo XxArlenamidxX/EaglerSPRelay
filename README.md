@@ -87,6 +87,10 @@ server {
 
 ### ⚙️ Full Setup (Debian/Ubuntu)
 
+(EaglerSPRelay Setup)
+
+(NGINX Reverse Proxy Setup)
+
 ```bash
 apt install nginx certbot python3-certbot-nginx
 rm /etc/nginx/sites-enabled/default
@@ -96,6 +100,7 @@ nano /etc/nginx/sites-available/eaglercraft-relay
 Then paste:
 
 ```nginx
+# Replace <domain> with your domain
 server {
     listen 80;
     server_name <domain>;
@@ -105,6 +110,7 @@ server {
     }
 }
 
+# Replace <domain> with your domain
 server {
     listen 443 ssl;
     server_name <domain>;

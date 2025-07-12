@@ -130,6 +130,8 @@ systemctl enable --now eaglersprelay.service
 # NGINX Reverse Proxy Setup
 ```bash
 apt install nginx certbot python3-certbot-nginx
+# Replace <domain> with your desired domain (You have to have an A record pointing to the public IP of your VPS)
+certbot certonly --nginx -d <domain>
 rm /etc/nginx/sites-enabled/default
 nano /etc/nginx/sites-available/eaglercraft-relay
 ```

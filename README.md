@@ -185,8 +185,10 @@ systemctl restart eaglersprelay
 Now, go to your eaglercraft instance (or just go to https://eaglercraft.com/mc/1.8.8-wasm)
 Put in your relay domain with `wss://`
 <img width="793" height="611" alt="image" src="https://github.com/user-attachments/assets/2e2406ab-dbd0-49c2-9684-40779d08cdd7" />
+<br>
 And click `add relay`
 <img width="760" height="102" alt="image" src="https://github.com/user-attachments/assets/0a6e68e5-ff8d-46dc-965f-fbf8ebe6afc5" />
+<br>
 If you did everything correctly, it should change the name to `Eags. Shared World Relay` and have a green status 
 
 ✅ Your relay should now work.  

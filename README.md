@@ -194,6 +194,7 @@ If you did everything correctly, it should change the name to `Eags. Shared Worl
 
 ✅ Your relay should now work.  
 ℹ️ You can change the name, port or any setting in `relayConfig.ini`
+<br>
 📩 Questions? Problems? DM `arlenrivalxs` on Discord.
 
 **Custom Relay made by Me: wss://minecraft.arlensdash.online/relay**
